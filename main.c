@@ -2,15 +2,14 @@
  * LCD.c
  *
  * Created: 21-12-2021 08:32:41
- * Author : Mk1sh
+ * Author : Ashish
  */ 
 #define F_CPU 8000000UL
 #define lcd PORTC
 #include <avr/io.h>
 #include <util/delay.h>
 
-
-
+//ADC Function to convert Analog value into Digital
 int ADC_read(int x)
 {
 	ADMUX=x|0x40;
@@ -19,6 +18,7 @@ int ADC_read(int x)
 	return ADC;
 }
 
+//LCD Initialization function
 void lcdinit()
 {
 	lcd_cmd(0x02); //to set the home position
@@ -48,6 +48,7 @@ void lcd_data(char d)
 	lcd=lcd-0x04; 
 }
 
+//Print String on LCD
 void lcd_str(char ch[])
 { int i=0;
 	while (ch[i]!='\0')
@@ -57,6 +58,7 @@ void lcd_str(char ch[])
 	}
 }
 
+//Print numbers on LCD
 void lcd_num(int n)
 {
 	if (n<10)
@@ -70,6 +72,7 @@ void lcd_num(int n)
 	}
 }
 
+//Print Smiley and Sad Emoji Function
 void smiley()
 {
 	lcd_cmd(0x40);
@@ -95,6 +98,7 @@ void sad()
 	lcd_data(0b00000000);
 }
 
+// Main function
 int main(void)
 {	
 	DDRC =0xFF;
@@ -124,14 +128,8 @@ int main(void)
 					location++;
 					lcd_cmd(location);
 				}
-			}
-			
-			
-		}
-		
-		
-		
+			}	
+		}		
     }
-	
 }
 
